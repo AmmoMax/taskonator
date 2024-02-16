@@ -20,7 +20,7 @@ class PTaskStore(Protocol):
     async def delete_task(self, task_id: str) -> None:
         pass
 
-    async def get_tasks_by_status(self, status: str) -> list:
+    async def get_tasks_by_status(self, status: str) -> dict:
         pass
 
 
@@ -52,9 +52,9 @@ class TaskStore:
         task = self.store[task_id]
         task['status'] = 'deleted'
 
-    async def get_tasks_by_status(self, status: str) -> list:
-        tasks_list = []
+    async def get_tasks_by_status(self, status: str) -> dict:
+        filtered_task_by_status = {}
         for task_id, task_info in self.store.items():
             if task_info['status'] == status:
-                tasks_list.append({task_id: task_info})
-        return tasks_list
+                filtered_task_by_status.update({task_id: task_info})
+        return filtered_task_by_status

@@ -15,6 +15,10 @@ class TaskManager:
     def __init__(self, task_store: PTaskStore):
         self._task_store = task_store
 
-    async def get_tasks_by_status(self, status):
-        tasks = self._task_store.get_task_by_status(status)
+    async def get_tasks_by_status(self, status) -> dict:
+        tasks = await self._task_store.get_tasks_by_status(status)
         return tasks
+
+    async def get_task_by_id(self, task_id: str) -> dict:
+        task = await self._task_store.get_task(task_id)
+        return task
