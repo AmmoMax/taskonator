@@ -11,6 +11,8 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from models import User
 from task_manager import TaskManager
 from task_store import TaskStore
+from user_manager import UserManager
+from user_store import UserStore
 
 # TODO: вынести в конфиг
 BOT_TOKEN = getenv("BOT_TOKEN")
@@ -18,11 +20,12 @@ dp = Dispatcher()
 
 
 class TaskBot:
-    def __init__(self, bot_token, task_manager: TaskManager):
+    def __init__(self, bot_token, task_manager: TaskManager, user_manager: UserManager):
         self._bot_token = bot_token
         self.dispatcher = Dispatcher()
         self.bot = Bot(token=self._bot_token, parse_mode=ParseMode.HTML)
         self.task_manager = task_manager
+        self.user_manager = user_manager
 
     async def _command_start_handler(self, message: Message) -> None:
         """Process the /start command"""
@@ -55,10 +58,16 @@ class TaskBot:
         """
         task_id = message.text
         first_name = message.from_user.first_name
+        user_id = message.from_user.id
         task_info = await self.task_manager.get_task_by_id(task_id=task_id)
         task_description = task_info.get('description')
+        # TODO: вынести текст сообщения в конфиг
         await message.answer(f'Отлично! Задача {task_description} была зарегистрирована за пользователем {first_name}',
                              reply_markup=ReplyKeyboardRemove())
+        # TODO: продумать логику по проверке назначения задания, напирмер если у пользователя уже есть задача
+        assigned = await self.user_manager.assign_task(user_id=user_id, task_id=task_id)
+
+
 
     async def start_polling(self):
         self.dispatcher.message.register(self._command_start_handler, CommandStart())
@@ -102,7 +111,12 @@ async def main() -> None:
 
     task_manager = TaskManager(task_store=task_store)
 
-    bot = TaskBot(bot_token=BOT_TOKEN, task_manager=task_manager)
+    user_store = UserStore()
+    user_manager = UserManager(task_manager=task_manager, user_store=user_store)
+
+    bot = TaskBot(bot_token=BOT_TOKEN,
+                  task_manager=task_manager,
+                  user_manager=user_manager)
     await bot.start_polling()
 
 
