@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 aiogram = "^3.3.0"
+dependency-injector = "^4.44.0"
 
 
 [build-system]
