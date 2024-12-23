@@ -1,10 +1,8 @@
 import asyncio
 from os import getenv
 
-from aiogram import Dispatcher
 from dependency_injector.wiring import inject, Provide
 from domains.command.main.bot_app.container import Container
-from domains.main.adapter.input.fsm_create_family.create_family import create_family_router
 from src.domains.main.adapter.input.bot import TaskBot
 from domains.main.application.service.user_management import UserManager
 from domains.main.application.service.family_management import FamilyManager

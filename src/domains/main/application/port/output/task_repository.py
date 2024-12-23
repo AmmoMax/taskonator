@@ -15,3 +15,7 @@ class TaskRepositoryPort(ABC):
     @abstractmethod
     async def update_task_status(self, task_id: str, status: str):
         raise NotImplementedError
+
+    @abstractmethod
+    async def get_available_tasks(self, family_id: str) -> list[Task]:
+        raise NotImplementedError
