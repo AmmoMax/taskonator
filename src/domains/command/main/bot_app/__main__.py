@@ -10,13 +10,15 @@ from domains.main.application.service.family_management import FamilyManager
 
 @inject
 async def run_bot(user_manager: UserManager = Provide[Container.user_manager],
-                  family_manager: FamilyManager = Provide[Container.family_manager]):
+                  family_manager: FamilyManager = Provide[Container.family_manager],
+                  task_manager = Provide[Container.task_manager]):
     # TODO: вынести в конфиг
     BOT_TOKEN = getenv("BOT_TOKEN")
 
     bot = TaskBot(bot_token=BOT_TOKEN,
                   user_manager=user_manager,
-                  family_manager=family_manager)
+                  family_manager=family_manager,
+                  task_manager=task_manager)
 
     await bot.start_polling()
 

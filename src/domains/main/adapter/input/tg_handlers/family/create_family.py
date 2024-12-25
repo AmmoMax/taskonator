@@ -29,3 +29,4 @@ async def create_family(message: Message, state: FSMContext, family_manager: Fam
     await state.set_state(CreateFamilyStates.set_family_name)
     await family_manager.create_family(family_name=family_name, user_id=message.from_user.id)
     await message.answer(f'Семья {family_name} успешно создана!')
+    await state.clear()

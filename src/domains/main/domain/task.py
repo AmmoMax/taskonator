@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 from typing import Optional
 from enum import Enum
@@ -17,3 +19,5 @@ class Task(BaseModel):
     family_id: UUID
     status: TaskStatus = TaskStatus.NEW
     assigned_to: Optional[UUID] = None
+    expiration_date: datetime
+    cost: int

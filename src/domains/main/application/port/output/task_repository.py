@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from uuid import UUID
 
 from src.domains.main.domain.task import Task
 
@@ -17,5 +18,5 @@ class TaskRepositoryPort(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_available_tasks(self, family_id: str) -> list[Task]:
+    async def get_available_tasks(self, family_id: UUID) -> list[Task]:
         raise NotImplementedError
