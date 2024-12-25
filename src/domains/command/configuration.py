@@ -1,5 +1,6 @@
 from pydantic import Field, SecretStr
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
+
 
 class DBConfig(BaseSettings):
     POSTGRES_HOST: str
@@ -18,3 +19,7 @@ class DBConfig(BaseSettings):
             self.POSTGRES_PORT,
             self.POSTGRES_NAME,
         )
+
+
+class Config(BaseSettings):
+    LOGGING_LEVEL: str = Field(default="DEBUG")

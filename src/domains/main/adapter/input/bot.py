@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.types import Message
 
@@ -14,7 +15,7 @@ from domains.main.adapter.input.tg_handlers.family.create_family import create_f
 class TaskBot:
     def __init__(self, bot_token, user_manager: UserManagerInterface, family_manager: FamilyManagerInterface, task_manager: TaskManagerInterface):
         self.dispatcher: Dispatcher = Dispatcher(family_manager=family_manager, user_manager=user_manager, task_manager=task_manager)
-        self.bot = Bot(token=bot_token, parse_mode=ParseMode.HTML)
+        self.bot = Bot(token=bot_token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
         self.task_manager = Mock()
         self._register_routers()
 
