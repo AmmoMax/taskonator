@@ -17,9 +17,10 @@ class TaskManager(TaskManagerInterface):
         :return:
         """
         user = await self._user_repository.get_user(user_id)
-        family_id = user.family_id
-
-        available_family_tasks = await self._task_repository.get_available_tasks(family_id)
+        available_family_tasks = []
+        if user:
+            family_id = user.family_id
+            available_family_tasks = await self._task_repository.get_available_tasks(family_id)
         return available_family_tasks
 
 

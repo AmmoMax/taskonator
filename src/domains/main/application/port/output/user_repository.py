@@ -9,5 +9,5 @@ class UserRepositoryPort(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_user(self, user_id: str) -> User:
+    async def get_user(self, user_id: str) -> User | None:
         raise NotImplementedError

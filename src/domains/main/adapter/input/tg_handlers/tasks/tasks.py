@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove
@@ -8,6 +10,7 @@ from aiogram.fsm.context import FSMContext
 from domains.main.application.port.input.task_manager import TaskManagerInterface
 
 tasks_router = Router()
+logger = logging.getLogger(__name__)
 
 
 class TaskStates(StatesGroup):
@@ -23,6 +26,11 @@ async def get_available_tasks(message: Message, state: FSMContext, task_manager:
     """
     user_id = str(message.from_user.id)
     list_of_tasks = await task_manager.get_available_tasks(user_id=user_id)
+    if not list_of_tasks:
+        await message.answer("К сожалению, в вашей семье пока нет доступных задач."
+                             "Либо вы не зарегистрированы в семье, необходимо чтобы вас добавили в семью.")
+        await state.clear()
+        return
     formatted_tasks_list = format_list_of_task(list_of_tasks)
     keyboard = _build_task_keyboard(list_of_tasks)
     await message.answer("\n".join(formatted_tasks_list), reply_markup=keyboard.as_markup())

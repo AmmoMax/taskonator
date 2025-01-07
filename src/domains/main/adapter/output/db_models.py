@@ -24,7 +24,7 @@ class DBFamily(Base):
     created_at: Mapped[datetime] = mapped_column(types.DateTime(), default=func.now())
     updated_at: Mapped[datetime] = mapped_column(types.DateTime(), default=func.now(), onupdate=func.now())
 
-    users: Mapped[List["DBUser"]] = relationship(back_populates="family", cascade="all, delete-orphan")
+    users: Mapped[List["DBUser"]] = relationship(back_populates="family")
 
 
 class DBUser(Base):
@@ -32,14 +32,14 @@ class DBUser(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(types.Uuid, primary_key=True)
     family_id: Mapped[uuid.UUID] = mapped_column(types.Uuid, sqlalchemy.ForeignKey("family.id"), nullable=True)
-    tg_id: Mapped[int]
+    tg_id: Mapped[str]
     name: Mapped[str]
     balance: Mapped[int]
     is_admin: Mapped[bool]
     created_at: Mapped[datetime] = mapped_column(types.DateTime(), default=func.now())
     updated_at: Mapped[datetime] = mapped_column(types.DateTime(), default=func.now(), onupdate=func.now())
 
-    family: Mapped["DBFamily"] = relationship(back_populates="users", cascade="all, delete-orphan")
+    family: Mapped["DBFamily"] = relationship(back_populates="users")
     tasks: Mapped[List["DBTask"]] = relationship(back_populates="user")
 
 
