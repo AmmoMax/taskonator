@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class FamilyManagerInterface(ABC):
     @abstractmethod
-    async def create_family(self, family_name: str, user_id: str) -> dict:
+    async def create_family(self, family_name: str, tg_user_id: int) -> dict:
         raise NotImplementedError
 
     @abstractmethod

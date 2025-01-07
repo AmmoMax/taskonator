@@ -13,7 +13,9 @@ class UserManager(UserManagerInterface):
         user = User(username=username, user_id=user_id)
         self.user_repository.create_user(user)
 
-
     async def assign_task(self, user_id: str, task_id: str) -> bool:
         result = await self.user_repository.assign_task(user_id, task_id)
         return result
+
+    async def get_user(self, tg_user_id: int) -> User:
+        pass

@@ -32,6 +32,7 @@ class DBUser(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(types.Uuid, primary_key=True)
     family_id: Mapped[uuid.UUID] = mapped_column(types.Uuid, sqlalchemy.ForeignKey("family.id"), nullable=True)
+    tg_id: Mapped[int]
     name: Mapped[str]
     balance: Mapped[int]
     is_admin: Mapped[bool]

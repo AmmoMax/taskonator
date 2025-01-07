@@ -1,8 +1,8 @@
 """add tables for user, family and tasks
 
-Revision ID: 61e05156cd4b
+Revision ID: b09f673edb88
 Revises: 
-Create Date: 2024-12-25 17:34:35.856709
+Create Date: 2024-12-25 18:29:20.014070
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '61e05156cd4b'
+revision: str = 'b09f673edb88'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -31,6 +31,7 @@ def upgrade() -> None:
     op.create_table('user',
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('family_id', sa.Uuid(), nullable=True),
+    sa.Column('tg_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('balance', sa.Integer(), nullable=False),
     sa.Column('is_admin', sa.Boolean(), nullable=False),

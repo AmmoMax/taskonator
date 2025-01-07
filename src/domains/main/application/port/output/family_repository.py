@@ -7,5 +7,5 @@ from src.domains.main.domain.family import Family
 class FamilyRepositoryPort(ABC):
 
     @abstractmethod
-    async def create_family(self, family: Family, user_id: str) -> None:
+    async def create_family(self, family: Family, user: User) -> None:
         raise NotImplementedError
