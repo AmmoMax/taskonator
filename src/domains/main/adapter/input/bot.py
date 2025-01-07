@@ -10,6 +10,7 @@ from domains.main.application.port.input.family_manager import FamilyManagerInte
 from domains.main.application.port.input.task_manager import TaskManagerInterface
 from domains.main.application.port.input.user_manager import UserManagerInterface
 from domains.main.adapter.input.tg_handlers.family.create_family import create_family_router
+from domains.main.adapter.input.tg_handlers.start import start_router
 
 
 class TaskBot:
@@ -22,6 +23,7 @@ class TaskBot:
     def _register_routers(self):
         self.dispatcher.include_router(create_family_router)
         self.dispatcher.include_router(tasks_router)
+        self.dispatcher.include_router(start_router)
 
     async def _command_start_handler(self, message: Message) -> None:
         """Process the /start command"""
